@@ -1,7 +1,6 @@
 package advent;
 
 import java.util.ArrayList;
-import advent.myReader;
 
 /**
  * This class completes the Advent of Code 2023 challenge for day one.
