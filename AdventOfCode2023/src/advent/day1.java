@@ -16,44 +16,6 @@ public class day1 {
     }
 
     /**
-     * A helper function which tells if a provided String contains a
-     * spelled out numeral or not. For example "smdujoneasr" would return
-     * "one", as it contains the word "one".
-     * @param matchMe the String to be checked.
-     * @return an integer containing the numeral, if any was found.
-     */
-    private int findDigitInString(String matchMe) {
-        if (matchMe.contains("one")) {
-            return 1;
-        }
-        if (matchMe.contains("two")) {
-            return 2;
-        }
-        if (matchMe.contains("three")) {
-            return 3;
-        }
-        if (matchMe.contains("four")) {
-            return 4;
-        }
-        if (matchMe.contains("five")) {
-            return 5;
-        }
-        if (matchMe.contains("six")) {
-            return 6;
-        }
-        if (matchMe.contains("seven")) {
-            return 7;
-        }
-        if (matchMe.contains("eight")) {
-            return 8;
-        }
-        if (matchMe.contains("nine")) {
-            return 9;
-        }
-        return 0;
-    }
-
-    /**
      * Part one of the challenge.
      * @param filePath a String containing the path to the input text file.
      */
@@ -97,24 +59,10 @@ public class day1 {
             // Loop through the characters. Identify digits, but also numbers
             // spelled out in full.
             ArrayList<Character> digits = new ArrayList<Character>();
-            StringBuilder spelledOut = new StringBuilder();
+            line = removeNumerals(line);
             for (int i = 0; i < line.length(); i++) {
                 if (Character.isDigit(line.charAt(i))) {
                     digits.add(line.charAt(i));
-                    // Clear the StringBuilder since a digit is a break in
-                    // a valid spelled out numeral.
-                    spelledOut = new StringBuilder();
-                }
-                else {
-                    spelledOut.append(line.charAt(i));
-                    // Check to see if we have spelled a numeral.
-                    int check = findDigitInString(spelledOut.toString());
-                    if (check > 0) {
-                        digits.add(Integer.toString(check).charAt(0));
-                        // Clear the StringBuilder since we have found a
-                        // spelled out word and need to reset.
-                        spelledOut = new StringBuilder();
-                    }
                 }
             }
 
@@ -126,5 +74,93 @@ public class day1 {
         }
         System.out.println("Part Two. The total sum is: " + totalSum);
     }
+    
+    /**
+     * Recursively check through a provided String and replace all fully spelled
+     * out numeral words with numeric digits. Because of the way the challenge
+     * works, we must only replace the first instance of each numeral and then
+     * re-check the word (e.g. oneight must end up as 1ight, not 18).
+     * @param haystack the String to be checked
+     * @return the String with replacement performed.
+     */
+    public String removeNumerals(String haystack) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < haystack.length(); i++) {
+            builder.append(Character.toString(haystack.charAt(i)));
 
+            if (builder.toString().contains("one")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("one"), newStack.indexOf("one") + 3);
+                newStack.append('1');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }
+            if (builder.toString().contains("two")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("two"), newStack.indexOf("two") + 3);
+                newStack.append('2');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }    
+            if (builder.toString().contains("three")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("three"), newStack.indexOf("three") + 5);
+                newStack.append('3');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("four")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("four"), newStack.indexOf("four") + 4);
+                newStack.append('4');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("five")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("five"), newStack.indexOf("five") + 4);
+                newStack.append('5');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("six")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("six"), newStack.indexOf("six") + 3);
+                newStack.append('6');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("seven")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("seven"), newStack.indexOf("seven") + 5);
+                newStack.append('7');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("eight")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("eight"), newStack.indexOf("eight") + 5);
+                newStack.append('8');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+            if (builder.toString().contains("nine")) {
+                StringBuilder newStack = new StringBuilder(haystack);
+                newStack.delete(newStack.indexOf("nine"), newStack.indexOf("nine") + 4);
+                newStack.append('9');
+                haystack = newStack.toString();
+                builder = new StringBuilder();
+                haystack = removeNumerals(haystack);
+            }     
+        }
+        return haystack; 
+    }
 }
