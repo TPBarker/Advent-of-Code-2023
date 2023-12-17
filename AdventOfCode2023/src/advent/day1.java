@@ -75,6 +75,10 @@ public class day1 {
     }
     
     /**
+     * Searches a given String and replaces any spelled-out numerals
+     * with their digits. To preserve spelled-out numerals which are combined
+     * with others (e.g. twone), insert the digit into the String alongside
+     * the word version. E.g. "twone" should become "two2twoone1one".
      * @param haystack the String to be checked
      * @return the String with replacement performed.
      */
